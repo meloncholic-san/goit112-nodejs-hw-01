@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors'
 import PinoHttp from "pino-http";
 import routes from './routes/routes.js';
-
+import cookieParser from 'cookie-parser';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 export async function setupServer() {
@@ -12,7 +12,7 @@ export async function setupServer() {
 
     app.use(cors({origin: '*'}));
     app.use(PinoHttp());
-
+    app.use(cookieParser());
 
     app.use('/api', routes);
 

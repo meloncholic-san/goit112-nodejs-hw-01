@@ -9,13 +9,13 @@ import { parseFilterParams } from "../utils/parseFilterParams.js";
         const { page, perPage } = parsePaginationParams(req.query);
         const {sortBy, sortOrder} = parseSortParams(req.query);
         const filter = parseFilterParams(req.query);
-        console.log(req.query);
         const contacts = await getAllContacts({ 
             page,
             perPage,
             sortBy,
             sortOrder,
-            filter
+            filter,
+            userId: req.user.id,
         });
 
         res.json({status: 200, data:contacts, message: "Successfully found contacts!"});
@@ -23,7 +23,7 @@ import { parseFilterParams } from "../utils/parseFilterParams.js";
     
     export async function getContactByIdCtrl(req, res) {
         const contactId = req.params.id;
-        const contact = await getContactById(contactId);
+        const contact = await getContactById(contactId, req.user.id);
 
         if(!contact) throw new createHttpError.NotFound('Contact not found');
 
@@ -33,14 +33,14 @@ import { parseFilterParams } from "../utils/parseFilterParams.js";
 
     export async function createContactCtrl(req, res) {
         const payload = req.body;
-        const newContact = await createContact(payload);
+        const newContact = await createContact({...payload, userId: req.user.id});
         res.status(201).json({data: newContact, message: "Successfully created new contact!"});
     }
 
     export async function updateContactCtrl(req, res) {
         const payload = req.body;
         const contactId = req.params.id;
-        const updatedContact = await updateContact(contactId, payload);
+        const updatedContact = await updateContact(contactId, req.user.id, payload);
 
         if (!updatedContact) {
         throw new createHttpError.NotFound('Contact not found');
@@ -51,7 +51,7 @@ import { parseFilterParams } from "../utils/parseFilterParams.js";
 
     export async function deleteContactCtrl(req, res) {
         const contactId = req.params.id;
-        const deletedContact = await deleteContact(contactId);
+        const deletedContact = await deleteContact(contactId, req.user.id);
         if(!deletedContact) throw new createHttpError.NotFound('Contact not found');
         res.status(204);
     }
@@ -60,7 +60,7 @@ import { parseFilterParams } from "../utils/parseFilterParams.js";
     export async function replaceContactCtrl(req, res) {
         const contactId = req.params.id;
         const payload = req.body;
-        const { value, updatedExisting } = await replaceContact(contactId, payload);
+        const { value, updatedExisting } = await replaceContact(contactId, req.user.id, payload);
 
         if (updatedExisting === true) {
             return res.json({
