@@ -1,4 +1,5 @@
-import { registerUser, loginUser, logoutUser, refreshSession} from '../services/auth.js';
+import createHttpError from 'http-errors';
+import { registerUser, loginUser, logoutUser, refreshSession, requestResetPassword, resetPassword} from '../services/auth.js';
 
 export const registerUserCtrl = async (req, res) => {
   const user = await registerUser(req.body);
@@ -68,4 +69,19 @@ export const refreshTokenCtrl = async(req, res) => {
         accessToken: session.accessToken,
         },
     });
+}
+
+export const requestSendResetEmailCtrl = async (req, res) => {
+    const { email } = req.body;
+    const result = await requestResetPassword(email);
+
+    res.json({ status: 200, message: 'Reset password email sent successfully' });
+}   
+
+
+export const resetPasswordCtrl  = async (req, res) => {
+    const {password, token} = req.body;
+    console.log(password, token);
+    await resetPassword(password, token);
+    res.send({ status: 200, message: 'Password reset successfully', data: {} });
 }
