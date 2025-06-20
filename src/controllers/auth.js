@@ -14,8 +14,6 @@ export const registerUserCtrl = async (req, res) => {
 export const loginUserCtrl = async (req, res) => {
     const session = await loginUser(req.body.email, req.body.password);
 
-
-    
     res.cookie('sessionId', session._id, {
         httpOnly: true,
         expire: session.refreshTokenValidUntil,
@@ -30,7 +28,9 @@ export const loginUserCtrl = async (req, res) => {
     res.status(200).json({
         status: 200,
         message: 'Successfully login a user!',
-        accessToken: session.accessToken,
+        data: {
+            accessToken: session.accessToken,
+        },
     });
 }
 
