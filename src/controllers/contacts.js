@@ -34,7 +34,7 @@ import { parseFilterParams } from "../utils/parseFilterParams.js";
     export async function createContactCtrl(req, res) {
         const payload = req.body;
         const newContact = await createContact(payload);
-        res.status(201).json({data: newContact, message: "Successfully created new contact!"});
+        res.status(201).json({status: 201, data: newContact, message: "Successfully created new contact!"});
     }
 
     export async function updateContactCtrl(req, res) {
@@ -46,14 +46,14 @@ import { parseFilterParams } from "../utils/parseFilterParams.js";
         throw new createHttpError.NotFound('Contact not found');
         }
 
-        res.json({data: updatedContact, message: "Successfully updated contact!"});
+        res.json({status: 200, data: updatedContact, message: "Successfully updated contact!"});
     }
 
     export async function deleteContactCtrl(req, res) {
         const contactId = req.params.id;
         const deletedContact = await deleteContact(contactId);
         if(!deletedContact) throw new createHttpError.NotFound('Contact not found');
-        res.status(204);
+        res.status(204).end();
     }
 
 
