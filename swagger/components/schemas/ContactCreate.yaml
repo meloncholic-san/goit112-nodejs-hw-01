@@ -1,0 +1,33 @@
+type: object
+required:
+  - name
+  - phoneNumber
+  - contactType
+  - isFavourite
+properties:
+  name:
+    type: string
+    example: John Doe
+  phoneNumber:
+    type: string
+    example: "+1234567890"
+  email:
+    type: string
+    format: email
+    example: john.doe@example.com
+    nullable: true
+  isFavourite:
+    type: boolean
+    example: false
+  contactType:
+    type: string
+    enum:
+      - work
+      - home
+      - personal
+    example: personal
+  photo:
+    type: string
+    format: uri
+    example: "http://res.cloudinary.com/djqn3bly0/image/upload/v1750257506/srrludu9ktau9ekagvcm.jpg"
+    nullable: true
