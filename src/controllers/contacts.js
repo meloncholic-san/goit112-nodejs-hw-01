@@ -52,7 +52,7 @@ import { getEnvVar } from "../utils/getEnvVar.js";
         }
 
         const newContact = await createContact({...payload, userId: req.user.id, photo});
-        res.status(201).json({data: newContact, message: "Successfully created new contact!"});
+        res.status(201).json({status: 201, data: newContact, message: "Successfully created new contact!"});
     }
 
     export async function updateContactCtrl(req, res) {

@@ -31,7 +31,9 @@ export const loginUserCtrl = async (req, res) => {
     res.status(200).json({
         status: 200,
         message: 'Successfully login a user!',
-        accessToken: session.accessToken,
+        data: {
+            accessToken: session.accessToken,
+        },
     });
 }
 
