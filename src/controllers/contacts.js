@@ -34,7 +34,7 @@ import { parseFilterParams } from "../utils/parseFilterParams.js";
     export async function createContactCtrl(req, res) {
         const payload = req.body;
         const newContact = await createContact({...payload, userId: req.user.id});
-        res.status(201).json({data: newContact, message: "Successfully created new contact!"});
+        res.status(201).json({status: 201, data: newContact, message: "Successfully created new contact!"});
     }
 
     export async function updateContactCtrl(req, res) {
