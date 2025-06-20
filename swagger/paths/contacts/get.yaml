@@ -83,5 +83,18 @@ responses:
                   type: boolean
   '401':
     $ref: '../../responses/401.yaml'
+  '404':
+    description: Contacts not found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: Contacts not found
   '500':
     $ref: '../../responses/500.yaml'
