@@ -28,6 +28,6 @@ properties:
     example: personal
   photo:
     type: string
-    format: uri
+    format: binary
     example: "http://res.cloudinary.com/djqn3bly0/image/upload/v1750257506/srrludu9ktau9ekagvcm.jpg"
     nullable: true
