@@ -161,6 +161,26 @@
           "401": {
             "$ref": "#/components/responses/401"
           },
+          "404": {
+            "description": "Contacts not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Contacts not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "500": {
             "$ref": "#/components/responses/500"
           }
@@ -323,7 +343,7 @@
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
                 "$ref": "#/components/schemas/ContactUpdate"
               }
@@ -542,7 +562,7 @@
           },
           "photo": {
             "type": "string",
-            "format": "uri",
+            "format": "binary",
             "example": "http://res.cloudinary.com/djqn3bly0/image/upload/v1750257506/srrludu9ktau9ekagvcm.jpg",
             "nullable": true
           }
@@ -580,7 +600,7 @@
           },
           "photo": {
             "type": "string",
-            "format": "uri",
+            "format": "binary",
             "example": "http://res.cloudinary.com/djqn3bly0/image/upload/v1750257506/srrludu9ktau9ekagvcm.jpg",
             "nullable": true
           }
